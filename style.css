@@ -1,0 +1,193 @@
+/* Cài đặt cơ bản */
+html {
+   box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+   box-sizing: inherit;
+}
+
+body {
+   height: 100vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+   font-family: "Arial", sans-serif;
+   overflow: hidden;
+   margin: 0;
+}
+
+.container {
+   color: #fff;
+   z-index: 1;
+   position: relative;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   width: 100%;
+   text-align: center;
+}
+
+/* --- Phần Con Lắc Lắc Lư --- */
+
+/* 1. Thiết lập cho Mobile (Mặc định) */
+.title {
+   justify-content: center;
+   gap: 10px;
+   position: relative;
+   width: 95%;
+   /* Đẩy .title lên trên để tạo không gian cho dây dài */
+   margin-top: -30vh;
+   display: flex;
+}
+
+/* Lớp bọc chung cho mỗi con lắc */
+.pendulum-container {
+   position: relative;
+   height: 50vh; /* Chiều cao tối đa mà dây có thể chiếm */
+   width: 80px;
+   display: block;
+}
+
+/* Cánh tay đòn (Sợi dây) - CHỊU TRÁCH NHIỆM XOAY */
+.pendulum-arm {
+   top: -10vh; /* Bắt đầu từ ngoài màn hình */
+   left: 50%;
+   transform: translateX(-50%); /* Căn giữa ban đầu */
+   width: 2px;
+   height: 30vh; /* Chiều dài dây */
+   background: #fff;
+   opacity: 0.7;
+
+   transform-origin: top center; /* Điểm xoay ở đỉnh */
+   animation: pendulum-swing 6s ease-in-out infinite alternate;
+   position: absolute;
+}
+
+/* Khung chữ (Quả lắc) - SẼ XOAY NGƯỢC LẠI */
+.letter {
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+   padding: 5px 10px;
+   width: fit-content;
+   line-height: 1.4;
+   text-align: center;
+   border-radius: 10px;
+
+   position: absolute;
+   bottom: -5vh; /* Vị trí khung chữ trên dây */
+   left: 50%;
+   transform: translateX(-50%); /* Căn giữa ban đầu */
+
+   /* Xoay ngược lại để chữ đứng thẳng */
+   animation: pendulum-counter-rotate 6s ease-in-out infinite alternate;
+   font-size: 1.8em;
+}
+
+/* Thiết lập màu sắc và độ trễ cho từng con lắc */
+.pendulum-container:nth-child(1) .pendulum-arm {
+   animation-delay: 0s;
+}
+.pendulum-container:nth-child(1) .letter {
+   animation-delay: 0s;
+   background: radial-gradient(circle, #ff6b6b, #ff8e53);
+}
+
+.pendulum-container:nth-child(2) .pendulum-arm {
+   animation-delay: 0.5s;
+}
+.pendulum-container:nth-child(2) .letter {
+   animation-delay: 0.5s;
+   background: radial-gradient(circle, #4facfe, #00f2fe);
+}
+
+.pendulum-container:nth-child(3) .pendulum-arm {
+   animation-delay: 1s;
+}
+.pendulum-container:nth-child(3) .letter {
+   animation-delay: 1s;
+   background: radial-gradient(circle, #a18cd1, #fbc2eb);
+}
+
+.pendulum-container:nth-child(4) .pendulum-arm {
+   animation-delay: 1.5s;
+}
+.pendulum-container:nth-child(4) .letter {
+   animation-delay: 1.5s;
+   background: radial-gradient(circle, #f6d365, #fda085);
+}
+
+/* --- KEYFRAMES MÔ PHỎNG DAO ĐỘNG CON LẮC ĐƠN (MOBILE - GÓC NHỎ 5 độ) --- */
+
+/* 1. Xoay cánh tay đòn (Tạo quỹ đạo cung tròn) */
+@keyframes pendulum-swing {
+   0% {
+      transform: rotate(-5deg) translateX(-50%);
+   }
+   100% {
+      transform: rotate(5deg) translateX(-50%);
+   }
+}
+
+/* 2. Xoay ngược lại cho khung chữ (Giữ chữ thẳng) */
+@keyframes pendulum-counter-rotate {
+   0% {
+      transform: rotate(5deg) translateX(-50%);
+   }
+   100% {
+      transform: rotate(-5deg) translateX(-50%);
+   }
+}
+
+/* Style cho message và canvas (Giữ nguyên) */
+p#message {
+   font-size: 1.2em;
+   margin: 10px 0;
+   min-height: 50px;
+   padding: 0 15px;
+}
+
+canvas {
+   top: 0;
+   left: 0;
+   z-index: 0;
+   position: absolute;
+}
+
+/* --- RESPONSIVE CHO LAPTOP/DESKTOP (min-width: 1024px) --- */
+@media (min-width: 1024px) {
+   .title {
+      gap: 120px;
+      margin-top: -15vh;
+   }
+   .letter {
+      font-size: 3em;
+      padding: 10px 20px;
+   }
+   p#message {
+      font-size: 1.5em;
+   }
+   .pendulum-arm {
+      top: -15vh;
+      height: 45vh;
+   }
+
+   /* GHI ĐÈ KEYFRAMES CHO DESKTOP (GÓC LỚN 15 độ) */
+   @keyframes pendulum-swing {
+      0% {
+         transform: rotate(-15deg) translateX(-50%);
+      }
+      100% {
+         transform: rotate(15deg) translateX(-50%);
+      }
+   }
+   @keyframes pendulum-counter-rotate {
+      0% {
+         transform: rotate(15deg) translateX(-50%);
+      }
+      100% {
+         transform: rotate(-15deg) translateX(-50%);
+      }
+   }
+}
