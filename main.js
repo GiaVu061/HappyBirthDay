@@ -1,7 +1,7 @@
 // Typing effect for custom message
 const messageElement = document.getElementById("message");
 const customMessage =
-   "May your birthday be as incredible as you are! Wishing you nothing but the best on your special day and a future filled with happiness, success, and everything you deserve. 🎂";
+   "Wishing you a birthday filled with love, laughter, and unforgettable moments. May the year ahead bring you endless joy, success, and everything your heart desires. 🎂";
 let index = 0;
 
 // Hàm bắt đầu hiệu ứng đánh máy
